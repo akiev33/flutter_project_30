@@ -24,6 +24,12 @@ class _GridSectionWidgetState extends State<GridSectionWidget> {
   final List<int> indexes = [];
 
   @override
+  void didUpdateWidget(covariant GridSectionWidget oldWidget) {
+    indexes.clear();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +76,13 @@ class _GridSectionWidgetState extends State<GridSectionWidget> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.color6200EE),
                     onPressed: () {
+                      if (indexes.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Error. Select image to delete!'),
+                          ),
+                        );
+                      }
                       widget.onDelete(indexes);
                     },
                     child: Text(
