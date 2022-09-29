@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_30/Images/resources.dart';
 import 'package:flutter_project_30/social_screen/social_screen.dart';
@@ -127,6 +129,12 @@ class GridItem extends StatefulWidget {
 
 class _GridItemState extends State<GridItem> {
   bool isActive = false;
+
+  @override
+  void didUpdateWidget(covariant GridItem oldWidget) {
+    isActive = false;
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
