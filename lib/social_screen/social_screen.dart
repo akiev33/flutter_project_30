@@ -49,85 +49,91 @@ class _SocialAppState extends State<SocialApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SocialAppBar(),
-      body: ListView(
-        children: [
-          const AvatarWidget(),
-          const SelectTypesWidget(),
-          FriendsWidget(
-            friends: friends,
-            onDelete: (index) {
-              friends.removeWhere((element) => element.index == index);
-              setState(() {});
-            },
+      body: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(child: AvatarWidget()),
+          const SliverToBoxAdapter(child: SelectTypesWidget()),
+          SliverToBoxAdapter(
+            child: FriendsWidget(
+              friends: friends,
+              onDelete: (index) {
+                friends.removeWhere((element) => element.index == index);
+                setState(() {});
+              },
+            ),
           ),
-          ButtonWidget(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('ADD FRIEND'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextField(
-                          controller: imageController,
-                          decoration: const InputDecoration(
-                            labelText: 'image',
+          SliverToBoxAdapter(
+            child: ButtonWidget(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('ADD FRIEND'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: imageController,
+                            decoration: const InputDecoration(
+                              labelText: 'image',
+                            ),
                           ),
+                          TextField(
+                            controller: nameController,
+                            decoration: const InputDecoration(
+                              labelText: 'name',
+                            ),
+                          ),
+                          TextField(
+                            controller: workController,
+                            decoration: const InputDecoration(
+                              labelText: 'work',
+                            ),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Exit'),
                         ),
-                        TextField(
-                          controller: nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'name',
-                          ),
-                        ),
-                        TextField(
-                          controller: workController,
-                          decoration: const InputDecoration(
-                            labelText: 'work',
-                          ),
+                        ElevatedButton(
+                          onPressed: () {
+                            friends.add(
+                              FriendModel(
+                                Images.f1,
+                                nameController.text,
+                                workController.text,
+                                friends.length + 1,
+                              ),
+                            );
+                            Navigator.pop(context);
+                            setState(() {});
+                          },
+                          child: const Text('ADD'),
                         ),
                       ],
-                    ),
-                    actions: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Exit'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          friends.add(
-                            FriendModel(
-                              Images.f1,
-                              nameController.text,
-                              workController.text,
-                              friends.length + 1,
-                            ),
-                          );
-                          Navigator.pop(context);
-                          setState(() {});
-                        },
-                        child: const Text('ADD'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
+                    );
+                  },
+                );
+              },
+            ),
           ),
-          GridSectionWidget(
-            media: media,
-            onDelete: (indexes) {
-              final _array = media;
-              for (int i in indexes) {
-                media.removeWhere((element) => element.indexImage == i);
-              }
-              media = _array;
-              setState(() {});
-            },
+          SliverToBoxAdapter(
+            child: GridSectionWidget(
+              media: media,
+              onDelete: (indexes) {
+                final _array = media;
+                for (int i in indexes) {
+                  media.removeWhere((element) => element.indexImage == i);
+                }
+                media = _array;
+                setState(() {});
+              },
+            ),
           ),
         ],
       ),

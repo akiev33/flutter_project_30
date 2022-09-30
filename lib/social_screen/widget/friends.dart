@@ -6,8 +6,11 @@ import 'package:flutter_project_30/theme/colors.dart';
 import 'package:flutter_project_30/theme/text_style.dart';
 
 class FriendsWidget extends StatelessWidget {
-  const FriendsWidget({Key? key, required this.friends, required this.onDelete})
-      : super(key: key);
+  const FriendsWidget({
+    Key? key,
+    required this.friends,
+    required this.onDelete,
+  }) : super(key: key);
 
   final List<FriendModel> friends;
   final Function(int index) onDelete;

@@ -79,7 +79,7 @@ class _GridSectionWidgetState extends State<GridSectionWidget> {
                       if (indexes.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Error. Select image to delete!'),
+                            content: Text('Error, Select image to delete!'),
                           ),
                         );
                       }
